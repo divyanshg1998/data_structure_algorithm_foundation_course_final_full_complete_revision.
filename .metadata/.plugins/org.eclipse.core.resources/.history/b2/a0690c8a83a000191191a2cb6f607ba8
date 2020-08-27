@@ -1,0 +1,44 @@
+package May29_2019;
+import java.util.*;
+
+public class encodings {
+
+	public static ArrayList<String> fun(String str){
+		if(str.length()==0) {
+			ArrayList<String> al=new ArrayList<>();
+			al.add("");
+			return al;
+		}
+		
+		char ch= str.charAt(0);
+		String ros=str.substring(1,str.length());
+		
+		ArrayList<String> rres=fun(ros);
+		
+		ArrayList<String> mres=new ArrayList<>();
+		
+		for(int i=0; i<rres.size(); i++) {
+//		if(rres.get(i).length()<)
+		
+			if(rres.get(i).charAt(0)>'i')
+			{
+				mres.add(ch+rres.get(i));
+			}
+			else {
+				mres.add((ch+rres.get(i).charAt(0))+ rres.get(i).substring(1));
+				mres.add(ch+rres.get(i));
+			}
+		}
+		
+	return mres;	
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String str= "1123";
+		
+		ArrayList<String> al= fun(str); 
+		
+		System.out.println(al);
+	}
+
+}

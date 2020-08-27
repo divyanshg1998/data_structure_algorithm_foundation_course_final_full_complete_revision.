@@ -1,0 +1,123 @@
+package lecture2;
+import java.util.*;
+
+public class priority_queue_demo{
+
+	static void kthlargest(int[] arr, int k){
+	
+		PriorityQueue<Integer> pq = new PriorityQueue<>();
+		
+		for(int i=0; i<k;i++){
+			pq.add(arr[i]);
+		}
+		
+		for(int i=0; i<k;i++){
+			System.out.println(pq.peek());
+		}
+		
+		for(int j=k;j<arr.length;j++){
+			if(arr[j] > pq.peek()){
+				pq.remove();
+				pq.add(arr[j]);
+			}
+		}
+		
+		while(pq.size()>0){
+			System.out.println(pq.peek());
+			pq.remove();
+		}
+		
+	}
+	
+	 static void ksorted(int[] arr2, int k){
+		 PriorityQueue<Integer> pq = new PriorityQueue<>();
+		 for(int i=0;i<k;i++){
+			 pq.add(arr2[i]);
+		 }
+		 for(int j=k;j<arr2.length;j++){
+			 if(arr2[j] < pq.peek()){
+				 System.out.println(arr2[j]);
+			 }else if(arr2[j] > pq.peek()){
+				 System.out.println(pq.peek());
+				 pq.remove();
+				 pq.add(arr2[j]);
+			 } 
+		 }
+		 while(pq.size()>0){
+			 System.out.println(pq.peek());
+			 pq.remove();
+		 }
+	 }
+	 
+	 static class mHelper implements Comparable<mHelper>{
+		 Integer di;
+		 Integer li;
+		 Integer val;
+		 
+		 mHelper(Integer di,Integer li,Integer val){
+			 this.di=di;
+			 this.li=li;
+			 this.val=val;
+		 }
+
+		@Override
+		public int compareTo(mHelper o) {
+			// TODO Auto-generated method stub
+			return this.val - o.val;
+		}
+		 
+		 
+	 }
+	 
+	 static ArrayList<Integer> mergekSortedLists(ArrayList<ArrayList<Integer>> list){
+		 PriorityQueue<mHelper> pq= new PriorityQueue<>();
+
+		 ArrayList<Integer> res = new ArrayList<>();
+		 
+		 for(Integer i=0; i<list.size();i++){
+			 pq.add(new mHelper(0, i, list.get(i).get(0)));
+		 }
+		 
+		 while(pq.size()>0){
+		
+			 mHelper a = pq.peek();
+			 res.add(a.val);
+			 System.out.print(a.val+" ");
+			 pq.remove();
+			if(a.di == list.get(a.li).size() -1){
+				
+			}else{
+				pq.add(new mHelper(a.di+1, a.li, list.get(a.li).get(a.di+1)));
+			}
+		 }
+		 
+		 System.out.println();
+		 
+		 return res;
+	 }
+		 
+	 
+	 
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int[] arr= {2,8,14,5,6,1,9,4,20,3,11};
+		int k=4;
+		kthlargest(arr, k);
+		
+		int[] arr2= {20,40,10,30,50,80,60,90,70,120,110,100};
+//		ksorted(arr2, 2);
+		
+		ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+		list.add(new ArrayList<>(Arrays.asList(2,5,9,18,20,25)));
+		list.add(new ArrayList<>(Arrays.asList(3,7,8,15,22)));
+		list.add(new ArrayList<>(Arrays.asList(0,4,6,12)));
+		list.add(new ArrayList<>(Arrays.asList(1,10,16,21,28)));
+		
+		ArrayList<Integer> sorted =mergekSortedLists(list);
+//		for(int i=0; i< sorted.size(); i++){
+//			System.out.print(sorted.get(i)+" ");
+//		}
+		
+		
+		}
+}

@@ -1,0 +1,201 @@
+ package Miscellaneous_debug;
+import java.util.*;
+
+public class crossword{
+ 
+
+static boolean cpwh(char[][] boxes, String word, int r, int c){
+    
+    if(c+ word.length() -1 > boxes.length -1){
+        return false;
+    }
+    
+    
+    // we always look for the conditions ehich are not true
+    //and return false 
+    for(int i=0; i<word.length(); i++){
+
+        // if(boxes[r][c+i]=='-' || boxes[r][c+i]==word[i])
+        //OR
+        if( c+i<boxes.length && boxes[r][c+i]!='-' && boxes[r][c+i]!= word.charAt(i) ){
+            return false;
+        } 
+
+    } 
+
+    if(c-1>=0 && boxes[r][c-1]=='-'){
+        return false;
+    }
+
+    else if(c+word.length() <=boxes[0].length-1 && boxes[r][c+word.length()] =='-') {
+        return false;
+    }
+
+    return true;
+}
+
+
+static boolean cpwv(char[][] boxes, String word, int r, int c){
+    
+    if(r+ word.length() -1 > boxes.length -1){
+        return false;
+    }
+    
+    for(int i=0; i<word.length(); i++){
+
+        // if(boxes[r][c+i]=='-' || boxes[r][c+i]==word[i])
+        //OR
+        if( r+i < boxes.length && boxes[r+i][c] != '-' && boxes[r+i][c] != word.charAt(i) ){
+            return false;
+            // always r+1 condition bcz goes outof index 
+        } 
+
+    } 
+
+    if(r-1>=0 && boxes[r-1][c]=='-'){
+        return false;
+    }
+
+    else if(r+ word.length() <= boxes[0].length -1 && boxes[r+word.length()][c] =='-') {
+        return false;
+    }
+
+    return true;
+}
+
+static boolean[] pwv(char[][] boxes, String word, int r, int c){
+
+    boolean[] dipit=new boolean [word.length()];
+
+    for(int i=0; i<word.length(); i++){
+
+        // if(boxes[r][c+i]=='-' || boxes[r][c+i]==word[i])
+        //OR
+        if(boxes[r+i][c] == '-'){
+            boxes[r+i][c] = word.charAt(i);
+            dipit[i]=true;    
+        } 
+
+        else if(boxes[r+i][c] == word.charAt(i)){
+              dipit[i]=false;
+            }
+    } 
+
+    return dipit;
+
+
+}
+
+static boolean[] pwh(char[][] boxes, String word, int r, int c){
+
+    boolean[] dipit=new boolean [word.length()];
+
+    for(int i=0; i<word.length(); i++){
+
+        // if(boxes[r][c+i]=='-' || boxes[r][c+i]==word[i])
+        //OR
+        if(c+i<boxes.length && boxes[r][c+i] == '-'){
+            boxes[r][c+i] = word.charAt(i);
+            dipit[i]=true;    
+        } 
+
+        else if(c+i<boxes.length && boxes[r][c+i] == word.charAt(i)){
+            dipit[i]=false;
+        }
+    } 
+
+    return dipit;
+}
+
+static void upwh(char[][] boxes, int r, int c, boolean[] dipit){
+
+for(int i=0; i<dipit.length; i++){
+    if(dipit[i]==true){
+        boxes[r][c+i]='-';
+    }
+}
+}
+
+static void upwv(char[][] boxes, int r, int c, boolean[] dipit){
+
+    for(int i=0; i<dipit.length; i++){
+        if(dipit[i]==true){
+            boxes[r+i][c]='-';
+        }
+    }
+  }
+    
+static void solve( char[][] boxes, String [] word, int indx){
+
+    if(indx==word.length){
+
+        for(int i=0; i< boxes.length ;i++){
+            for(int j=0; j< boxes[0].length; j++){
+                System.out.print(boxes[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println("<--------------->");
+        return;
+    }
+
+
+
+for(int i=0; i<boxes.length* boxes[0].length; i++){
+
+    int r= i / boxes[0].length;
+    int c= i % boxes[0].length;
+
+    if(cpwh(boxes,word[indx],r,c)){
+
+        boolean[] dipit=pwh(boxes, word[indx], r, c );
+        
+        solve(boxes, word, indx+1 );
+
+        upwh(boxes, r, c, dipit);
+    }
+
+    if(cpwv(boxes,word[indx],r,c)){
+
+        boolean[] dipit=pwh(boxes, word[indx], r, c);
+        
+        solve(boxes, word, indx+1 );
+
+        upwv(boxes, r, c, dipit);
+    }
+
+}
+
+
+}
+
+
+    public static void main(String[] args){
+       
+        // char[][] arr2 = { 
+        //     { "++++++++++----+++".toCharArray(),
+        //      "+--+++------+++--" .toCharArray(),
+        //      "+--+++------+++--" .toCharArray()};
+        // how to make a char array
+        
+        
+        char[][] arr = { 
+            { '+', '-', '+', '+', '+', '+', '+', '+', '+', '+'},
+            { '+', '-', '+', '+', '+', '+', '+', '+', '+', '+' },
+            { '+', '-', '+', '+', '+', '+', '+', '+', '+', '+' },
+            { '+', '-', '-', '-', '-', '-', '+', '+', '+', '+' },
+            { '+', '-', '+', '+', '+', '-', '+', '+', '+', '+' },
+            { '+', '-', '+', '+', '+', '-', '+', '+', '+', '+' },
+            { '+', '+', '+', '+', '+', '-', '+', '+', '+', '+' },
+            { '+', '+', '-', '-', '-', '-', '-', '-', '+', '+' },
+            { '+', '+', '+', '+', '+', '-', '+', '+', '+', '+' },
+            { '+', '+', '+', '+', '+', '-', '+', '+', '+', '+' } };
+
+            String[] str = { "LONDON", "DELHI","ICELAND", "ANKARA" };
+            solve(arr, str, 0);
+            
+            int[] arr1={1,2};
+            // System.out.println(to_String(arr1));
+        }
+}
+

@@ -1,0 +1,94 @@
+
+package May29_2019;
+import java.util.*;
+
+public class Soluion {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		  
+
+		        Scanner scn= new Scanner(System.in);
+//		        String str =scn.next();    
+//		        int i= scn.nextInt();
+		        
+		        String str="h";
+		        int i=1;
+//		        System.out.println(str2);
+		    String s=f2(str,0,i);
+		    System.out.println(s.charAt(i));
+		    f(str,0,i);
+//		        System.out.println(str);
+		            
+		        
+		    }
+	
+		    static int ctr=0;
+	public static void f(String str,int i, int j) {
+	
+		        if(i==str.length()-2) {
+		            String str2=str.substring(i, i+2);
+		            
+		            if(str2.contentEquals("hi")) {
+//		                        System.out.println(str2);
+		                        str=str.substring(0,i)+"pep"+str.substring(i+2,str.length());
+		                        ctr++;
+		                    }
+		            // char ch ='a'-1;
+//		            System.out.println(str.charAt(j));
+		            
+		            System.out.println(str);
+		            return;     
+		            
+		        }
+		        
+		        String str2=str.substring(i, i+2);
+		    
+		        if(str2.contentEquals("hi")) {
+		            ctr++;  
+		            // System.out.println(str2);
+		                    str=str.substring(0,i)+"pep"+str.substring(i+2,str.length());
+		                f(str,i+3,j);        
+		                }
+		                else {
+		                    f(str,i+1,j);
+		                }
+		        
+		                
+		    }
+
+		    public static String f2(String str,int i, int j) {
+		    
+
+		        if(i==str.length()-2) {
+		            String str2=str.substring(i, i+2);
+		            
+		            if(str2.contentEquals("hi")) {
+//		                        System.out.println(str2);
+		                        str=str.substring(0,i)+"pep"+str.substring(i+2,str.length());
+		        ctr++;
+		                    }
+		            // char ch ='a'-1;
+		            return str;
+		                    
+		        }
+		        
+		        String str2=str.substring(i, i+2);
+		    
+		        if(str2.contentEquals("hi")) {
+		            ctr++;  
+		            // System.out.println(str2);
+		                    str=str.substring(0,i)+"pep"+str.substring(i+2,str.length());
+		                String str3=f2(str,i+3,j);        
+		        return str3;
+		        }
+		                else {
+		                	String str3=f2(str,i+1,j);
+		                	return str3;        }
+		        
+		                
+		    }	    
+		    
+	}
+
+

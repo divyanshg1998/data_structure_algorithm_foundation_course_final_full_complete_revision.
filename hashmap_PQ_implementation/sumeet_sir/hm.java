@@ -1,0 +1,92 @@
+package lecture4;
+
+import java.util.*;
+
+public class hm<k,v> {
+
+		class HMNode{
+				k key;
+				v value;
+				
+				HMNode(k key, v value){
+					this.key = key;
+					this.value = value;
+				}
+			}
+			
+			LinkedList<HMNode>[] buckets;
+			int n;
+			int N;
+			
+			hm(){
+				N=4;
+				buckets = new LinkedList[N];
+				for(int i=0;i<buckets.length; i++){
+					buckets[i] = new LinkedList<>();
+				}
+				n=0;
+				}
+			
+			public void put(k key,v value){
+				int bi = getBucketIndex(key);
+				int di = getDataIndex(bi,key);
+				if(di == -1){
+					HMNode n2a = new HMNode(key,value);
+					buckets[bi].add(n2a);
+				}else{
+					HMNode n2u = buckets[bi].get(di);
+					n2u.value = value;
+				}
+				
+				double lambda = n* 1.0/N;
+				
+				if(lambda > 2.0){
+					rehash();
+				}
+			}
+			
+			public boolean containKey(k key){
+				int bi = getBucketIndex(key);
+				int di = getDataIndex(bi,key);
+				if(di == -1){
+					return false;
+				}else{
+					return true;
+				}
+			}
+			
+			public v get(k key){
+				int bi = getBucketIndex(key);
+				int di = getDataIndex(bi,key);
+				if(di == -1){
+					return null;
+				}else{
+					HMNode n2r = buckets[bi].get(di);
+				}
+			}
+			
+			private int getDataIndex(int bi, k key) {
+				for(HMNode node: buckets[bi]){
+				int counter = 0;
+				if(node.key == key){
+					return counter;
+				}counter++;
+				}
+				return -1;
+			}
+
+			private int getBucketIndex(k key) {
+				int hc = key.hashCode();
+				hc = Math.abs(hc);
+				return hc%N;
+			}
+
+			public static void main(String[] args) {
+				// TODO Auto-generated method stub
+
+			}
+
+		}
+	}
+
+}

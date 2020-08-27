@@ -1,0 +1,10 @@
+package lecture1_hashMapHeaps;
+
+public class findPairDiviblebyk {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

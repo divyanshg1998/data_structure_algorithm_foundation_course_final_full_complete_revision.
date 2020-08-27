@@ -1,0 +1,91 @@
+package lecture1_hashMapHeaps;
+
+import java.util.HashMap;
+
+public class findPairDiviblebyk {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		int k=4;
+		int[] arr={2,5,3,8,5,4,7,1,3,6};
+		func(arr,k);		
+		
+	}
+	
+	static class pair{
+		int start;
+		int end;
+	
+		pair(int start,int end){
+			this.start=start;
+			this.end=end;
+		}
+		
+	}
+	
+	public static void func(int[] arr, int k){
+		
+		int[] sum=new int[arr.length];
+		int[] modulus= new int[arr.length];
+		
+		sum[0]=arr[0];
+		
+		for(int i=1; i<arr.length; i++ ){
+			sum[i]=sum[i-1]+arr[i];						
+		}
+		
+		for(int val: sum){
+			System.out.print(val+" ");
+		}	
+		
+		System.out.println();
+		
+		for(int i=0; i<arr.length; i++){
+			modulus[i]=sum[i]%k;
+		}
+		
+		for(int val: modulus){
+			System.out.print(val+" ");
+		}	
+		
+		HashMap<Integer,pair> hm=new HashMap<>();
+		
+		hm.put(0, new pair(-1,-1));
+		
+		for(int i=0; i< arr.length; i++){
+			
+			if(hm.containsKey(modulus[i])){
+				pair var=hm.get(modulus[i]);
+				var.end++;				
+			}
+			
+			else
+			{
+				hm.put(modulus[i],new pair(i,i));
+			}
+		}
+		int ol=0;
+			
+		for(int i=0; i<k; i++){
+			//alwys check whether hm contains or not
+			if(hm.containsKey(i)){
+			pair var= hm.get(i);
+			
+			int gl=var.end-var.start;
+			
+			if(gl>ol){
+				ol=gl;
+			}
+			}
+		}
+		System.out.println();
+		System.out.println("ans:"+ ol);
+		
+		
+	}
+}
+		
+				
+		
+		
